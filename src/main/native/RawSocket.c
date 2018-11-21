@@ -353,7 +353,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	memset (&ifr, 0, sizeof (struct ifreq));
 
 	/* Open A Raw Socket */
-	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 1)
+	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons (ETHER_TYPE))) < 1)
 	{
 		printf ("ERROR: Could not open socket, Got #?\n");
 		return -1;
