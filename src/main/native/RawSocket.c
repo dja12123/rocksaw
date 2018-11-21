@@ -33,7 +33,7 @@
 #  include <sys/socket.h>
 #  include <unistd.h>
 #  include <sys/time.h>
-#  include <linux/ethernet.h>
+#  include <net/ethernet.h>
 #  include <sys/ioctl.h>
 #  include <linux/if_packet.h>
 #  include <linux/if.h>
