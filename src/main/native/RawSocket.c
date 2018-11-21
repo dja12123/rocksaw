@@ -563,8 +563,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1recvfrom1
  */
 JNIEXPORT jint JNICALL
 Java_com_savarese_rocksaw_net_RawSocket__1_1recvfrom2
-(JNIEnv *env, jclass cls, jint socket,
- jbyteArray data, jint offset, jint len, jint family, jbyteArray address)
+(JNIEnv *env, jclass cls, jint socket, jbyteArray data, jint offset, jint len, jint family, jbyteArray address)
 {
   int result;
   jbyte *buf;
@@ -619,7 +618,8 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1recvfrom2
  * Method:    __pmoderecv
  * Signature: (I[BII)I
  */
-JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1pmoderecv
+JNIEXPORT jint JNICALL
+Java_com_savarese_rocksaw_net_RawSocket__1_1pmoderecv
 (JNIEnv *env, jclass cls, jint socket, jbyteArray data, jint offset, jint len)
 {
 	int result;
