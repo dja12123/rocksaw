@@ -38,6 +38,7 @@
 #  include <linux/if_packet.h>
 #  include <linux/if.h>
 #  include <arpa/inet.h>
+#  include <linux/if_packet.h>
 
 #  ifdef ROCKSAW_USE_POLL
 
