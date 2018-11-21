@@ -33,7 +33,7 @@
 #  include <sys/socket.h>
 #  include <unistd.h>
 #  include <sys/time.h>
-#  include <net/ethernet.h>
+#  include <linux/ethernet.h>
 #  include <sys/ioctl.h>
 #  include <linux/if_packet.h>
 #  include <linux/if.h>
@@ -366,7 +366,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	if (ioctl (raw_socket, SIOCGIFFLAGS, &ifr) == -1)
 	{
 		perror ("Error: Could not retrive the flags from the device.\n");
-		return -1;
+		return -2;
 	}
 
 	/* Set the old flags plus the IFF_PROMISC flag */
@@ -374,16 +374,16 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	if (ioctl (raw_socket, SIOCSIFFLAGS, &ifr) == -1)
 	{
 		perror ("Error: Could not set flag IFF_PROMISC");
-		return -1;
+		return -3;
 	}
-	printf ("Entering promiscuous mode\n");
+	printf ("Entering promiscuous mode %s\n", device);
 
 	/* Configure the device */
 
 	if (ioctl (raw_socket, SIOCGIFINDEX, &ifr) < 0)
 	{
 		perror ("Error: Error getting the device index.\n");
-		return -1;
+		return -4;
 	}
 
 	return raw_socket;
