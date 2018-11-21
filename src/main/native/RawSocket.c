@@ -622,21 +622,21 @@ JNIEXPORT jint JNICALL
 Java_com_savarese_rocksaw_net_RawSocket__1_1pmoderecv
 (JNIEnv *env, jclass cls, jint socket, jbyteArray data, jint offset, jint len)
 {
-	int result;
-	jbyte *buf;
+  int result;
+  jbyte *buf;
 
-	buf = (*env)->GetByteArrayElements(env, data, NULL);
+  buf = (*env)->GetByteArrayElements(env, data, NULL);
 
-	result = recvfrom(socket, buf + offset, len, 0, NULL, NULL);
+  result = recvfrom(socket, buf + offset, len, 0, NULL, NULL);
 
-	(*env)->ReleaseByteArrayElements(env, data, buf, 0);
+  (*env)->ReleaseByteArrayElements(env, data, buf, 0);
 
 #if defined(_WIN32)
-	if(result < 0)
-	errno = WSAGetLastError();
+  if(result < 0)
+	  errno = WSAGetLastError();
 #endif
 
-	return result;
+  return result;
 }
 
 
