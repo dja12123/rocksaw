@@ -341,7 +341,8 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1socket
  * Method:    __pmodeSocket
  * Signature: (Ljava/lang/String;I)I
  */
-JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
+JNIEXPORT jint JNICALL
+Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 (JNIEnv *env, jclass cls, jstring jstr, jint protocol)
 {
 	const char *device = (*env)->GetStringUTFChars(env, jstr, NULL);
