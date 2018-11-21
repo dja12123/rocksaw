@@ -37,8 +37,7 @@
 #  include <sys/ioctl.h>
 #  include <linux/if_packet.h>
 #  include <linux/if.h>
-#  include <arpa/inet.h>
-#  include <linux/if_packet.h>
+#  include <netinet/ether.h>
 
 #  ifdef ROCKSAW_USE_POLL
 
