@@ -339,9 +339,9 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1socket
  */
 JNIEXPORT jint JNICALL
 Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
-(JNIEnv *, jclass, jstring)
+(JNIEnv *env, jclass cls, jstring jstr)
 {
-	const char *device = (*env)->GetStringUTFChars(env, device, NULL);
+	const char *device = (*env)->GetStringUTFChars(env, jstr, NULL);
 
 	struct ifreq ifr;
 	int raw_socket;
