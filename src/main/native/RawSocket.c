@@ -36,7 +36,7 @@
 #  include <linux/if_packet.h>
 #  include <net/ethernet.h>
 #  include <sys/ioctl.h>
-#  include <sys/ioctl.h>
+#  include <net/if.h>
 
 #  ifdef ROCKSAW_USE_POLL
 
