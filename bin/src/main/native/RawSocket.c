@@ -334,61 +334,6 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1socket
 
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket
- * Method:    __pmodeSocket
- * Signature: (Ljava/lang/String;)I
- */
-JNIEXPORT jint JNICALL
-Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
-(JNIEnv *, jclass, jstring)
-{
-	const char *device = (*env)->GetStringUTFChars(env, device, NULL);
-
-	struct ifreq ifr;
-	int raw_socket;
-
-	memset (&ifr, 0, sizeof (struct ifreq));
-
-	/* Open A Raw Socket */
-	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 1)
-	{
-		printf ("ERROR: Could not open socket, Got #?\n");
-		exit (1);
-	}
-
-	/* Set the device to use */
-	strcpy (ifr.ifr_name, device);
-
-	/* Get the current flags that the device might have */
-	if (ioctl (raw_socket, SIOCGIFFLAGS, &ifr) == -1)
-	{
-		perror ("Error: Could not retrive the flags from the device.\n");
-		exit (1);
-	}
-
-	/* Set the old flags plus the IFF_PROMISC flag */
-	ifr.ifr_flags |= IFF_PROMISC;
-	if (ioctl (raw_socket, SIOCSIFFLAGS, &ifr) == -1)
-	{
-		perror ("Error: Could not set flag IFF_PROMISC");
-		exit (1);
-	}
-	printf ("Entering promiscuous mode\n");
-
-	/* Configure the device */
-
-	if (ioctl (raw_socket, SIOCGIFINDEX, &ifr) < 0)
-	{
-		perror ("Error: Error getting the device index.\n");
-		exit (1);
-	}
-
-	return raw_socket;
-}
-
-
-
-/*
- * Class:     com_savarese_rocksaw_net_RawSocket
  * Method:    __bind
  * Signature: (II[B)I
  */
