@@ -60,10 +60,10 @@ JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1socket
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket
  * Method:    __pmodeSocket
- * Signature: (Ljava/lang/String;)I
+ * Signature: (Ljava/lang/String;I)I
  */
 JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
-  (JNIEnv *, jclass, jstring);
+  (JNIEnv *, jclass, jstring, jint);
 
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket
@@ -216,6 +216,14 @@ JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1recvfrom1
  */
 JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1recvfrom2
   (JNIEnv *, jclass, jint, jbyteArray, jint, jint, jint, jbyteArray);
+
+/*
+ * Class:     com_savarese_rocksaw_net_RawSocket
+ * Method:    __pmoderecv
+ * Signature: (I[BII)I
+ */
+JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1pmoderecv
+  (JNIEnv *, jclass, jint, jbyteArray, jint, jint);
 
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket

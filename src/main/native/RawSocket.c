@@ -28,19 +28,6 @@
 
 #else
 
-#include <arpa/inet.h>
-#include <linux/if_packet.h>
-#include <linux/ip.h>
-#include <linux/udp.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/ioctl.h>
-#include <sys/socket.h>
-#include <net/if.h>
-#include <netinet/ether.h>
-
-
 #  include <netdb.h>
 #  include <netinet/in.h>
 #  include <sys/socket.h>
@@ -352,11 +339,10 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1socket
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket
  * Method:    __pmodeSocket
- * Signature: (Ljava/lang/String;)I
+ * Signature: (Ljava/lang/String;I)I
  */
-JNIEXPORT jint JNICALL
-Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
-(JNIEnv *env, jclass cls, jstring jstr)
+JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
+(JNIEnv *env, jclass cls, jstring jstr, jint protocol)
 {
 	const char *device = (*env)->GetStringUTFChars(env, jstr, NULL);
 
@@ -366,7 +352,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	memset (&ifr, 0, sizeof (struct ifreq));
 
 	/* Open A Raw Socket */
-	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons (ETHER_TYPE))) < 1)
+	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, protocol)) < 1)
 	{
 		printf ("ERROR: Could not open socket, Got #?\n");
 		return -1;
@@ -627,6 +613,32 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1recvfrom2
 
   return result;
 }
+
+/*
+ * Class:     com_savarese_rocksaw_net_RawSocket
+ * Method:    __pmoderecv
+ * Signature: (I[BII)I
+ */
+JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1pmoderecv
+(JNIEnv *env, jclass cls, jint socket, jbyteArray data, jint offset, jint len)
+{
+	int result;
+	jbyte *buf;
+
+	buf = (*env)->GetByteArrayElements(env, data, NULL);
+
+	result = recvfrom(socket, buf + offset, len, 0, NULL, NULL);
+
+	(*env)->ReleaseByteArrayElements(env, data, buf, 0);
+
+#if defined(_WIN32)
+	if(result < 0)
+	errno = WSAGetLastError();
+#endif
+
+	return result;
+}
+
 
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket

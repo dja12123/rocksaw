@@ -102,7 +102,9 @@ public class RawSocket
 	private int __socket;
 	private int __family;
 	private int __stimeout, __rtimeout;
+
 	private boolean __useSelectTimeout;
+	private boolean __isPmodeSocket;
 
 	/**
 	 * Creates an uninitialized socket. If the {@code os.name} system property
@@ -116,6 +118,8 @@ public class RawSocket
 		__family = __UNDEFINED;
 		__stimeout = 0;
 		__rtimeout = 0;
+		
+		__isPmodeSocket = false;
 
 		String os = System.getProperty("os.name");
 
@@ -182,7 +186,7 @@ public class RawSocket
 
 	private native static int __socket(int protocolFamily, int protocol);
 
-	private native static int __pmodeSocket(String device);
+	private native static int __pmodeSocket(String device, int protocol);
 
 	/**
 	 * <p>
@@ -252,6 +256,7 @@ public class RawSocket
 		if (isOpen())
 			throw new IllegalStateException();
 		__socket = __socket(protocolFamily, protocol);
+		__isPmodeSocket = false;
 
 		if (__socket < 0)
 		{
@@ -262,12 +267,13 @@ public class RawSocket
 		__family = protocolFamily;
 	}
 
-	public void pmodeOpen(String device) throws IllegalStateException, IOException
+	public void pmodeOpen(String device, int protocol) throws IllegalStateException, IOException
 	{
 		if (isOpen())
 			throw new IllegalStateException();
 
-		__socket = __pmodeSocket(device);
+		__socket = __pmodeSocket(device, protocol);
+		__isPmodeSocket = true;
 
 		if (__socket < 0)
 		{
@@ -638,6 +644,8 @@ public class RawSocket
 	private native static int __recvfrom1(int socket, byte[] data, int offset, int length, int family);
 
 	private native static int __recvfrom2(int socket, byte[] data, int offset, int length, int family, byte[] address);
+	
+	private native static int __pmoderecv(int socket, byte[] data, int offset, int length);
 
 	/**
 	 * Reads packet data from the socket. IPv4 ({@link #PF_INET}) packets will be
@@ -682,8 +690,18 @@ public class RawSocket
 		}
 
 		if (result == 0)
-			result = (address == null ? __recvfrom1(__socket, data, offset, length, __family)
-					: __recvfrom2(__socket, data, offset, length, __family, address));
+		{
+			if(__isPmodeSocket)
+			{
+				__pmoderecv(__socket, data, offset, length);
+			}
+			else
+			{
+				result = (address == null ? __recvfrom1(__socket, data, offset, length, __family)
+						: __recvfrom2(__socket, data, offset, length, __family, address));
+			}
+		}
+
 
 		if (result < 0)
 		{
