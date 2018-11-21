@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#define __USE_MISC
 
 #include <errno.h>
 #include <string.h>
@@ -36,7 +37,7 @@
 #  include <linux/if_packet.h>
 #  include <net/ethernet.h>
 #  include <sys/ioctl.h>
-#  include <features.h>
+#  include <net/if.h>
 
 #  ifdef ROCKSAW_USE_POLL
 
