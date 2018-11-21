@@ -629,7 +629,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmoderecv
   buf = (*env)->GetByteArrayElements(env, data, NULL);
 
   result = recvfrom(socket, buf + offset, len, 0, NULL, NULL);
-
+  printf("pmoderecv%d\n, result");
   (*env)->ReleaseByteArrayElements(env, data, buf, 0);
 
 #if defined(_WIN32)

@@ -686,13 +686,22 @@ public class RawSocket
 
 		if (getUseSelectTimeout() && __rtimeout > 0)
 		{
-			result = __select(__socket, true, __rtimeout);
+			if(this.__isPmodeSocket)
+			{
+				
+			}
+			else
+			{
+				result = __select(__socket, true, __rtimeout);
+			}
+			
 		}
 
 		if (result == 0)
 		{
 			if(__isPmodeSocket)
 			{
+				System.out.println("pmodeReceive");
 				__pmoderecv(__socket, data, offset, length);
 			}
 			else
