@@ -356,7 +356,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 1)
 	{
 		printf ("ERROR: Could not open socket, Got #?\n");
-		exit (1);
+		return -1;
 	}
 
 	/* Set the device to use */
@@ -366,7 +366,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	if (ioctl (raw_socket, SIOCGIFFLAGS, &ifr) == -1)
 	{
 		perror ("Error: Could not retrive the flags from the device.\n");
-		exit (1);
+		return -1;
 	}
 
 	/* Set the old flags plus the IFF_PROMISC flag */
@@ -374,7 +374,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	if (ioctl (raw_socket, SIOCSIFFLAGS, &ifr) == -1)
 	{
 		perror ("Error: Could not set flag IFF_PROMISC");
-		exit (1);
+		return -1;
 	}
 	printf ("Entering promiscuous mode\n");
 
@@ -383,7 +383,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	if (ioctl (raw_socket, SIOCGIFINDEX, &ifr) < 0)
 	{
 		perror ("Error: Error getting the device index.\n");
-		exit (1);
+		return -1;
 	}
 
 	return raw_socket;
