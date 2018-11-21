@@ -362,6 +362,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	/* Set the device to use */
 	strcpy (ifr.ifr_name, device);
 
+
 	/* Get the current flags that the device might have */
 	if (ioctl (raw_socket, SIOCGIFFLAGS, &ifr) == -1)
 	{
