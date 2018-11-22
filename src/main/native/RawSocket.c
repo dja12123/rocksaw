@@ -354,7 +354,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	memset (&ifr, 0, sizeof (struct ifreq));
 
 	/* Open A Raw Socket */
-	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons(0x0800))) < 1)
+	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons(protocol))) < 1)
 	{
 		printf ("ERROR: Could not open socket, Got #?\n");
 		return -1;
@@ -634,9 +634,7 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmoderecv
   jbyte *buf;
 
   buf = (*env)->GetByteArrayElements(env, data, NULL);
-  printf("start read%d\n", socket);
   result = recvfrom(socket, buf + offset, len, 0, NULL, NULL);
-  printf("pmoderecv%d\n", result);
   (*env)->ReleaseByteArrayElements(env, data, buf, 0);
 
 #if defined(_WIN32)

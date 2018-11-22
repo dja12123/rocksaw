@@ -701,7 +701,6 @@ public class RawSocket
 		{
 			if(__isPmodeSocket)
 			{
-				System.out.println("pmodeReceive");
 				result = __pmoderecv(__socket, data, offset, length);
 			}
 			else
