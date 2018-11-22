@@ -349,15 +349,18 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 
 	struct ifreq ifr;
 	int raw_socket;
+	int sockopt;
 
 	memset (&ifr, 0, sizeof (struct ifreq));
 
 	/* Open A Raw Socket */
-	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, 0x0800)) < 1)
+	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons(0x0800))) < 1)
 	{
 		printf ("ERROR: Could not open socket, Got #?\n");
 		return -1;
 	}
+
+
 
 	/* Set the device to use */
 	strcpy (ifr.ifr_name, device);
@@ -383,10 +386,22 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 
 	if (ioctl (raw_socket, SIOCGIFINDEX, &ifr) < 0)
 	{
-		perror ("Error: Error getting the device index.\n");
+		printf ("Error: Error getting the device index.\n");
 		return -4;
 	}
 
+	if (setsockopt(raw_socket, SOL_SOCKET, SO_REUSEADDR, &sockopt, sizeof sockopt) == -1) {
+		printf("setsockopt");
+		close(sockfd);
+		return -5;
+	}
+
+	/* Bind to device */
+	if (setsockopt(raw_socket, SOL_SOCKET, SO_BINDTODEVICE, device, IFNAMSIZ-1) == -1)	{
+		printf("SO_BINDTODEVICE");
+		close(sockfd);
+		return -6;
+	}
 	return raw_socket;
 }
 
