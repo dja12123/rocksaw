@@ -60,10 +60,10 @@ JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1socket
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket
  * Method:    __pmodeSocket
- * Signature: (Ljava/lang/String;I)I
+ * Signature: (Ljava/lang/String;)I
  */
 JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
-  (JNIEnv *, jclass, jstring, jint);
+  (JNIEnv *, jclass, jstring);
 
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket

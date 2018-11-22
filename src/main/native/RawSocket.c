@@ -339,11 +339,10 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1socket
 /*
  * Class:     com_savarese_rocksaw_net_RawSocket
  * Method:    __pmodeSocket
- * Signature: (Ljava/lang/String;I)I
+ * Signature: (Ljava/lang/String;)I
  */
-JNIEXPORT jint JNICALL
-Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
-(JNIEnv *env, jclass cls, jstring jstr, jint protocol)
+JNIEXPORT jint JNICALL Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
+  (JNIEnv *env, jclass cls, jstring jstr)
 {
 	const char *device = (*env)->GetStringUTFChars(env, jstr, NULL);
 
@@ -354,17 +353,14 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 	memset (&ifr, 0, sizeof (struct ifreq));
 
 	/* Open A Raw Socket */
-	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons(protocol))) < 1)
+	if ((raw_socket = socket (PF_PACKET, SOCK_RAW, htons(ETH_P_IP))) < 1)
 	{
 		printf ("ERROR: Could not open socket, Got #?\n");
 		return -1;
 	}
 
-
-
 	/* Set the device to use */
 	strcpy (ifr.ifr_name, device);
-
 
 	/* Get the current flags that the device might have */
 	if (ioctl (raw_socket, SIOCGIFFLAGS, &ifr) == -1)

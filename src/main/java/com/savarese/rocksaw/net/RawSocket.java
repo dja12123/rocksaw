@@ -186,7 +186,7 @@ public class RawSocket
 
 	private native static int __socket(int protocolFamily, int protocol);
 
-	private native static int __pmodeSocket(String device, int protocol);
+	private native static int __pmodeSocket(String device);
 
 	/**
 	 * <p>
@@ -267,12 +267,12 @@ public class RawSocket
 		__family = protocolFamily;
 	}
 
-	public void pmodeOpen(String device, int protocol) throws IllegalStateException, IOException
+	public void pmodeOpen(String device) throws IllegalStateException, IOException
 	{
 		if (isOpen())
 			throw new IllegalStateException();
 
-		__socket = __pmodeSocket(device, protocol);
+		__socket = __pmodeSocket(device);
 		__isPmodeSocket = true;
 
 		if (__socket < 0)
