@@ -384,12 +384,6 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 
 	/* Configure the device */
 
-	if (ioctl (raw_socket, SIOCGIFINDEX, &ifr) < 0)
-	{
-		printf ("Error: Error getting the device index.\n");
-		return -4;
-	}
-
 	if (setsockopt(raw_socket, SOL_SOCKET, SO_REUSEADDR, &sockopt, sizeof sockopt) == -1) {
 		printf("setsockopt");
 		return -5;
