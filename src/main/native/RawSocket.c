@@ -392,14 +392,12 @@ Java_com_savarese_rocksaw_net_RawSocket__1_1pmodeSocket
 
 	if (setsockopt(raw_socket, SOL_SOCKET, SO_REUSEADDR, &sockopt, sizeof sockopt) == -1) {
 		printf("setsockopt");
-		close(sockfd);
 		return -5;
 	}
 
 	/* Bind to device */
 	if (setsockopt(raw_socket, SOL_SOCKET, SO_BINDTODEVICE, device, IFNAMSIZ-1) == -1)	{
 		printf("SO_BINDTODEVICE");
-		close(sockfd);
 		return -6;
 	}
 	return raw_socket;
