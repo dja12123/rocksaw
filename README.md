@@ -2,7 +2,7 @@
 
 무작위 모드(Promiscuous mode) 를 지원하도록 수정하였습니다.
 
-support Promiscuous mode
+Rock Saw support Promiscuous mode
 
 ## RockSaw
 
